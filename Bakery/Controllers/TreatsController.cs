@@ -30,6 +30,15 @@ namespace Bakery.Controllers
             return View();
         }
 
+        public ActionResult Details(int id)
+        {
+            Treat treat = _db.Treats
+                .Include(f => f.Flavors)
+                .ThenInclude(join => join.Flavor)
+                .FirstOrDefault(t => t.TreatId == id);
+            return View(treat);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create(Treat treat, int FlavorId)
         {

@@ -23,6 +23,15 @@ namespace Bakery.Controllers
             _db = db;
         }
 
+        public ActionResult Details(int id)
+        {
+            Flavor flavor = _db.Flavors
+                .Include(t => t.Treats)
+                .ThenInclude(join => join.Treat)
+                .FirstOrDefault(f => f.FlavorId == id);
+            return View(flavor);
+        }
+
         public ActionResult Create(int TreatId)
         {
             ViewBag.Treats = _db.Treats.ToList();

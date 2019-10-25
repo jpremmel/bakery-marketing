@@ -10,12 +10,12 @@
 }
 @foreach(Treat treat in @ViewBag.Treats)
 {
-    <p>@Html.ActionLink(@treat.Name, "Details", "Treats")</p>
+    <p>@Html.ActionLink(@treat.Name, "Details", "Treats", new { id = @treat.TreatId })</p>
 }
 @if (User.Identity.IsAuthenticated)
-    {
-        <button class="btn btn-outline-danger">@Html.ActionLink("Add A Treat", "Create", "Treats")</button>
-    }
+{
+    <button class="btn btn-outline-danger">@Html.ActionLink("Add A Treat", "Create", "Treats")</button>
+}
 @if (!User.Identity.IsAuthenticated)
 {
     <p>Log in to add a treat!</p>
@@ -27,7 +27,7 @@
 }
 @foreach(Flavor flavor in @ViewBag.Flavors)
 {
-    <p>@Html.ActionLink(@flavor.Name, "Details", "Flavors")</p>
+    <p>@Html.ActionLink(@flavor.Name, "Details", "Flavors", new { id = @flavor.FlavorId })</p>
 }
 @if (User.Identity.IsAuthenticated)
 {
