@@ -23,10 +23,10 @@ namespace Bakery.Controllers
             _db = db;
         }
 
-        public ActionResult Create(int FlavorId)
+        public ActionResult Create(int id)
         {
             ViewBag.Flavors = _db.Flavors.ToList();
-            ViewBag.FlavorId = FlavorId;
+            ViewBag.FlavorId = id;
             return View();
         }
 

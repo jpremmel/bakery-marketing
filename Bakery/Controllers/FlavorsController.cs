@@ -32,10 +32,10 @@ namespace Bakery.Controllers
             return View(flavor);
         }
 
-        public ActionResult Create(int TreatId)
+        public ActionResult Create(int id)
         {
             ViewBag.Treats = _db.Treats.ToList();
-            ViewBag.TreatId = TreatId;
+            ViewBag.TreatId = id;
             return View();
         }
 
