@@ -1,7 +1,41 @@
 @using System.Security.Claims
+@using Bakery.Models
 
 <h1>Welcome to Pierre's Sweets!</h1>
 <button class="btn btn-outline-danger">@Html.ActionLink("Register", "Register", "Account")</button>
 <button class="btn btn-outline-danger">@Html.ActionLink("Log in", "Login", "Account")</button>
 
-<!-- List of treats and flavors -->
+<h3>Treats:</h3>
+@if (@ViewBag.Treats.Count == 0)
+{
+    <p>No treats have been added yet.</p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <button class="btn btn-outline-danger">@Html.ActionLink("Add A Treat", "Create", "Treats")</button>
+    }
+    else
+    {
+        <p>Log in to add a treat!</p>
+    }
+}
+@foreach(Treat treat in @ViewBag.Treats)
+{
+    <p>@treat.Name</p>
+}
+<h3>Flavors:</h3>
+@if (@ViewBag.Flavors.Count == 0)
+{
+    <p>No flavors have been added yet.</p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <button class="btn btn-outline-danger">@Html.ActionLink("Add A Flavor", "Create", "Flavors")</button>
+    }
+    else
+    {
+        <p>Log in to add a flavor!</p>
+    }
+}
+@foreach(Flavor flavor in @ViewBag.Flavors)
+{
+    <p>@flavor.Name</p>
+}

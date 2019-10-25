@@ -1,15 +1,46 @@
 @using Bakery.Models
 @using System.Security.Claims
 
-<h2>Welcome to the sweet shop, @User.Identity.Name!</h2>
+<h2>Welcome to Pierre's bakery, @User.Identity.Name!</h2>
 
-
+<h3>Treats:</h3>
+@if (@ViewBag.Treats.Count == 0)
+{
+    <p>No treats have been added yet.</p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <button class="btn btn-outline-danger">@Html.ActionLink("Add A Treat", "Create", "Treats")</button>
+    }
+    else
+    {
+        <p>Log in to add a treat!</p>
+    }
+}
+@foreach(Treat treat in @ViewBag.Treats)
+{
+    <p>@treat.Name</p>
+}
+<h3>Flavors:</h3>
+@if (@ViewBag.Flavors.Count == 0)
+{
+    <p>No flavors have been added yet.</p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <button class="btn btn-outline-danger">@Html.ActionLink("Add A Flavor", "Create", "Flavors")</button>
+    }
+    else
+    {
+        <p>Log in to add a flavor!</p>
+    }
+}
+@foreach(Flavor flavor in @ViewBag.Flavors)
+{
+    <p>@flavor.Name</p>
+}
 
 
 @if (User.Identity.IsAuthenticated)
 {
-
-
     @using (Html.BeginForm("LogOff", "Account"))
     {
         <input type="submit" class="btn btn-default" value="Log out" />
