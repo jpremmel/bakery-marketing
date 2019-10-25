@@ -1,0 +1,17 @@
+@using Library.Models
+@using System.Security.Claims
+
+<h2>Welcome to your library, @User.Identity.Name!</h2>
+
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+
+
+    @using (Html.BeginForm("LogOff", "Account"))
+    {
+        <input type="submit" class="btn btn-default" value="Log out" />
+    }
+}
