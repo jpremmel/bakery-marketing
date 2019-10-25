@@ -37,6 +37,34 @@ namespace Bakery.Controllers
             return RedirectToAction("Index", "Account");
         }
 
+        public ActionResult Edit(int id)
+        {
 
+            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Flavor flavor)
+        {
+
+
+            return RedirectToAction("Index", "Account");
+        }
+
+        public ActionResult Delete(int id)
+        {
+            Flavor flavor = _db.Flavors.FirstOrDefault(f => f.FlavorId == id);
+            return View(flavor);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Flavor flavor = _db.Flavors.FirstOrDefault(f => f.FlavorId == id);
+            _db.Flavors.Remove(flavor);
+            _db.SaveChanges();
+            return RedirectToAction("Index", "Account");
+        }
     }
 }
