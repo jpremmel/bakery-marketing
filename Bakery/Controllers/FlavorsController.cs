@@ -23,23 +23,31 @@ namespace Bakery.Controllers
             _db = db;
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int TreatId)
         {
-
+            ViewBag.Treats = _db.Treats.ToList();
+            ViewBag.TreatId = TreatId;
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Flavor flavor)
+        public async Task<ActionResult> Create(Flavor flavor, int TreatId)
         {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(userId);
+            flavor.User = currentUser;
             _db.Flavors.Add(flavor);
+            if (TreatId != 0)
+            {
+                _db.TreatFlavors.Add(new TreatFlavor() { FlavorId = flavor.FlavorId, TreatId = TreatId });
+            }
             _db.SaveChanges();
             return RedirectToAction("Index", "Account");
         }
 
         public ActionResult Edit(int id)
         {
-
+            
             
             return View();
         }

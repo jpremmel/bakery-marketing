@@ -9,5 +9,7 @@
     @Html.Label("Description", "Description: ")
     @Html.TextBoxFor(model => model.Name, new { @class="form-control"})
 
+    <input type="hidden" name="FlavorId" value=@ViewBag.FlavorId />
+
     <input type="submit" value="Add Treat" class="btn btn-outline-danger">
 }

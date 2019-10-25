@@ -7,37 +7,36 @@
 @if (@ViewBag.Treats.Count == 0)
 {
     <p>No treats have been added yet.</p>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <button class="btn btn-outline-danger">@Html.ActionLink("Add A Treat", "Create", "Treats")</button>
-    }
-    else
-    {
-        <p>Log in to add a treat!</p>
-    }
 }
 @foreach(Treat treat in @ViewBag.Treats)
 {
-    <p>@treat.Name</p>
+    <p>@Html.ActionLink(@treat.Name, "Details", "Treats")</p>
+}
+@if (User.Identity.IsAuthenticated)
+    {
+        <button class="btn btn-outline-danger">@Html.ActionLink("Add A Treat", "Create", "Treats")</button>
+    }
+@if (!User.Identity.IsAuthenticated)
+{
+    <p>Log in to add a treat!</p>
 }
 <h3>Flavors:</h3>
 @if (@ViewBag.Flavors.Count == 0)
 {
     <p>No flavors have been added yet.</p>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <button class="btn btn-outline-danger">@Html.ActionLink("Add A Flavor", "Create", "Flavors")</button>
-    }
-    else
-    {
-        <p>Log in to add a flavor!</p>
-    }
 }
 @foreach(Flavor flavor in @ViewBag.Flavors)
 {
-    <p>@flavor.Name</p>
+    <p>@Html.ActionLink(@flavor.Name, "Details", "Flavors")</p>
 }
-
+@if (User.Identity.IsAuthenticated)
+{
+    <button class="btn btn-outline-danger">@Html.ActionLink("Add A Flavor", "Create", "Flavors")</button>
+}
+@if (!User.Identity.IsAuthenticated)
+{
+    <p>Log in to add a flavor!</p>
+}
 
 @if (User.Identity.IsAuthenticated)
 {
