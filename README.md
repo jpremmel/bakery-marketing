@@ -1,12 +1,12 @@
 # _Pierre's Bakery Marketing App_
 
-#### _A web app for the fictional bakery owner Pierre, 25 Oct 2019_
+#### _A web app for the fictional bakery owner Pierre to market his treats & flavors, 27 Oct 2019_
 
 #### By _**Jacqueline Remmel**_
 
 ## Description
 
-_This application allows a bakery owner to add vendors to a list and to keep track of each vendor's orders._
+_This application allows users to explore the treats and flavors available at Pierre's bakery. This project was an exercise in many-to-many relationships because a treat can have many flavors and a flavor can have many treats. All users can see the details of the treats and flavors, but only signed-in users can create, edit, or delete them._
 
 ## Setup/Installation Requirements
 
