@@ -12,10 +12,10 @@
 
     @foreach(Treat treat in @ViewBag.Treats)
     {
-        @Html.CheckBox(@treat.Name, false);
+        <p>@Html.CheckBox(@treat.Name, false)
+        @treat.Name</p>
     }
 
     <input type="hidden" name="TreatId" value=@ViewBag.TreatId />
-
     <input type="submit" value="Add Flavor" class="btn btn-outline-danger">
 }

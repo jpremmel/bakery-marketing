@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System;
 
 namespace Bakery.Controllers
 {
@@ -40,8 +41,14 @@ namespace Bakery.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Flavor flavor, int TreatId)
+        public async Task<ActionResult> Create(Flavor flavor, List<Treat> Treats, int TreatId)
         {
+            // var selectedTreats = Request.Form.GetValues("SelectedFruits");
+            // System.Console.WriteLine("CHECKBOX TREATS: ");
+            // foreach(Treat treat in Treats)
+            // {
+            //     System.Console.WriteLine(">>>>>>>>>>" + treat.Name);
+            // }
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var currentUser = await _userManager.FindByIdAsync(userId);
             flavor.User = currentUser;
@@ -56,17 +63,26 @@ namespace Bakery.Controllers
 
         public ActionResult Edit(int id)
         {
-            
-            
-            return View();
+            Flavor flavor = _db.Flavors
+                .Include(t => t.Treats)
+                .ThenInclude(join => join.Treat)
+                .FirstOrDefault(f => f.FlavorId == id);
+            return View(flavor);
         }
 
         [HttpPost]
-        public ActionResult Edit(Flavor flavor)
+        public async Task<ActionResult> Edit(Flavor flavor/*, int TreatId*/)
         {
-
-
-            return RedirectToAction("Index", "Account");
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(userId);
+            flavor.User = currentUser;
+            // if (TreatId != 0)
+            // {
+            //     _db.TreatFlavors.Add(new TreatFlavor() { TreatId = TreatId, FlavorId = flavor.FlavorId });
+            // }
+            _db.Entry(flavor).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Details", "Flavors", new { id = flavor.FlavorId });
         }
 
         public ActionResult Delete(int id)
@@ -76,9 +92,12 @@ namespace Bakery.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(userId);
             Flavor flavor = _db.Flavors.FirstOrDefault(f => f.FlavorId == id);
+            flavor.User = currentUser;
             _db.Flavors.Remove(flavor);
             _db.SaveChanges();
             return RedirectToAction("Index", "Account");

@@ -17,3 +17,7 @@
 </ul>
 
 <button class="btn btn-outline-danger">@Html.ActionLink("Add A Flavor", "Create", "Flavors", new { id = @Model.TreatId })</button>
+
+<button class="btn btn-outline-danger">@Html.ActionLink("Edit This Treat", "Edit", "Treats", new { id = @Model.TreatId })</button>
+
+<button class="btn btn-outline-danger">@Html.ActionLink("Delete This Treat", "Delete", "Treats", new { id = @Model.TreatId })</button>

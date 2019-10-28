@@ -23,13 +23,6 @@ namespace Bakery.Controllers
             _db = db;
         }
 
-        public ActionResult Create(int id)
-        {
-            ViewBag.Flavors = _db.Flavors.ToList();
-            ViewBag.FlavorId = id;
-            return View();
-        }
-
         public ActionResult Details(int id)
         {
             Treat treat = _db.Treats
@@ -37,6 +30,13 @@ namespace Bakery.Controllers
                 .ThenInclude(join => join.Flavor)
                 .FirstOrDefault(t => t.TreatId == id);
             return View(treat);
+        }
+
+        public ActionResult Create(int id)
+        {
+            ViewBag.Flavors = _db.Flavors.ToList();
+            ViewBag.FlavorId = id;
+            return View();
         }
 
         [HttpPost]
@@ -51,21 +51,30 @@ namespace Bakery.Controllers
                 _db.TreatFlavors.Add(new TreatFlavor() { TreatId = treat.TreatId, FlavorId = FlavorId});
             }
             _db.SaveChanges();
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction("Details", "Treats", new { id = treat.TreatId });
         }
 
         public ActionResult Edit(int id)
         {
-
-
-            return View();
+            Treat treat = _db.Treats
+                .Include(f => f.Flavors)
+                .ThenInclude(join => join.Flavor)
+                .FirstOrDefault(t => t.TreatId == id);
+            return View(treat);
         }
 
         [HttpPost]
-        public ActionResult Edit(Treat treat)
+        public async Task<ActionResult> Edit(Treat treat/*, int FlavorId*/)
         {
-
-
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(userId);
+            treat.User = currentUser;
+            // if (FlavorId != 0)
+            // {
+            //     _db.TreatFlavors.Add(new TreatFlavor() { FlavorId = FlavorId, TreatId = treat.TreatId });
+            // }
+            _db.Entry(treat).State = EntityState.Modified;
+            _db.SaveChanges();
             return RedirectToAction("Index", "Account");
         }
 
@@ -76,9 +85,12 @@ namespace Bakery.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var currentUser = await _userManager.FindByIdAsync(userId);
             Treat treat = _db.Treats.FirstOrDefault(t => t.TreatId == id);
+            treat.User = currentUser;
             _db.Treats.Remove(treat);
             _db.SaveChanges();
             return RedirectToAction("Index", "Account");

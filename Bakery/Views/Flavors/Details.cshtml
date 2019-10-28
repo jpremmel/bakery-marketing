@@ -12,8 +12,12 @@
 <ul>
 @foreach(TreatFlavor join in Model.Treats)
 {
-    <li>@join.Treat.Name</li>
+    <li>join.Treat.Name</li>
 }
 </ul>
 
 <button class="btn btn-outline-danger">@Html.ActionLink("Add A Treat", "Create", "Treats", new { id = @Model.FlavorId })</button>
+
+<button class="btn btn-outline-danger">@Html.ActionLink("Edit This Flavor", "Edit", "Flavors", new { id = @Model.FlavorId })</button>
+
+<button class="btn btn-outline-danger">@Html.ActionLink("Delete This Flavor", "Delete", "Flavors", new { id = @Model.FlavorId })</button>
