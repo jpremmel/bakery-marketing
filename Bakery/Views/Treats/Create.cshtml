@@ -1,3 +1,4 @@
+@using Bakery.Models
 @model Bakery.Models.Treat
 
 <h2>Add A Treat</h2>
@@ -7,7 +8,17 @@
     @Html.TextBoxFor(model => model.Name, new { @class="form-control", required="required"})
 
     @Html.Label("Description", "Description: ")
-    @Html.TextBoxFor(model => model.Name, new { @class="form-control"})
+    @Html.TextBoxFor(model => model.Description, new { @class="form-control"})
+
+    @foreach(Flavor flavor in @ViewBag.Flavors)
+    {
+        <p>
+        <input type="hidden" name="Flavors.Index" value="@flavor.FlavorId">
+        <input type="hidden" name="Flavors[@flavor.FlavorId].FlavorId" value="@flavor.FlavorId">
+        <input type="checkbox" name="Flavors[@flavor.FlavorId].FlavorId" value="true">
+        @flavor.Name
+        </p>
+    }
 
     <input type="hidden" name="FlavorId" value=@ViewBag.FlavorId />
 

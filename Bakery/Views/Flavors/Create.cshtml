@@ -8,7 +8,7 @@
     @Html.TextBoxFor(model => model.Name, new { @class="form-control", required="required"})
 
     @Html.Label("Description", "Description: ")
-    @Html.TextBoxFor(model => model.Name, new { @class="form-control"})
+    @Html.TextBoxFor(model => model.Description, new { @class="form-control"})
 
     @foreach(Treat treat in @ViewBag.Treats)
     {
