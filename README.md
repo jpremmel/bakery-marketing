@@ -1,6 +1,6 @@
 # _Pierre's Bakery Marketing App_
 
-#### _A web app for the fictional bakery owner Pierre to market his treats & flavors, 27 Oct 2019_
+#### _A web app for the fictional bakery owner Pierre to market his treats & flavors, 30 Oct 2019_
 
 #### By _**Jacqueline Remmel**_
 
