@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
-using System;
+using Microsoft.AspNetCore.Http;
+
 
 namespace Bakery.Controllers
 {
@@ -43,8 +44,17 @@ namespace Bakery.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(Flavor flavor, List<Treat> Treats, int TreatId)
         {
+            System.Console.WriteLine("CHECKBOX TREATS: ");
+            foreach (Treat treat in Treats)
+            {
+                System.Console.WriteLine(">>>>>>>>>>>>>>>>>>> " + treat.Name);
+            }
+            System.Console.WriteLine("FLAVOR JUST CREATED: " + flavor.Name);
+            foreach (TreatFlavor join in flavor.Treats)
+            {
+                System.Console.WriteLine(">>>>> " + join.Treat.Name);
+            }
             // var selectedTreats = Request.Form.GetValues("SelectedFruits");
-            // System.Console.WriteLine("CHECKBOX TREATS: ");
             // foreach(Treat treat in Treats)
             // {
             //     System.Console.WriteLine(">>>>>>>>>>" + treat.Name);

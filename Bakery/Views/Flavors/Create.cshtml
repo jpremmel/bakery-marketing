@@ -12,8 +12,12 @@
 
     @foreach(Treat treat in @ViewBag.Treats)
     {
-        <p>@Html.CheckBox(@treat.Name, false)
-        @treat.Name</p>
+        <p>
+        <input type="hidden" name="Treats.Index" value="@treat.TreatId">
+        <input type="hidden" name="Treats[@treat.TreatId].TreatId" value="@treat.TreatId">
+        <input type="checkbox" name="Treats[@treat.TreatId].TreatId" value="true">
+        @treat.Name
+        </p>
     }
 
     <input type="hidden" name="TreatId" value=@ViewBag.TreatId />
